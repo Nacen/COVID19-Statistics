@@ -1,203 +1,169 @@
-import Head from 'next/head'
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
+import fetch from "node-fetch";
+import Footer from "../components/Footer";
+import CardList from "../components/CardList";
+import Dropdown from "../components/Dropdown";
+import LocationPicker from "../components/LocationPicker";
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+const API_ENDPOINT_ALL = "https://corona.lmao.ninja/all";
+const API_ENDPOINT_COUNTRIES = "https://corona.lmao.ninja/countries";
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
+const Home = ({ data, locationData }) => {
+  const [location, setLocation] = useState("Worldwide");
+  const [dataStatistics, setDataStatistics] = useState({
+    ...data
+  });
 
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
+  const handleLocationChange = evt => {
+    setLocation(evt.target.value);
+  };
 
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+  useEffect(() => {
+    async function getData() {
+      if (location === "Worldwide") {
+        console.log("location is worldwide");
+        const res = await fetch(API_ENDPOINT_ALL);
+        const responseData = await res.json();
+        const { cases, deaths, recovered } = await responseData;
+        setDataStatistics({ cases, deaths, recovered });
+      } else {
+        console.log("location is a country");
+        const res = await fetch(API_ENDPOINT_COUNTRIES);
+        const data = await res.json();
+        let filterDataByCountry = await {
+          ...data.filter(item => item.country === location)[0]
+        };
+        console.log(filterDataByCountry);
 
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        const {
+          cases,
+          deaths,
+          recovered,
+          todayCases: casesToday
+        } = await filterDataByCountry;
+        setDataStatistics({ cases, deaths, recovered, casesToday });
       }
+      return data;
+    }
+    getData();
+    console.log(dataStatistics);
+  }, [location]);
 
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
+  return (
+    <div className="container">
+      <Head>
+        <title>COVID19 Statistics</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+      <main>
+        <h1 className="title">Novel Corona Virus Statistics</h1>
+        <LocationPicker
+          handleLocationChange={handleLocationChange}
+          location={location}
+          locationData={locationData}
+        />
+        <CardList data={dataStatistics} />
+      </main>
 
-      footer img {
-        margin-left: 0.5rem;
-      }
+      <Footer />
 
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
+      <style jsx>{`
+        .container {
+          min-height: 100vh;
+          padding: 0 0.5rem;
+          display: flex;
           flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
-      }
-    `}</style>
 
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
+        main {
+          padding: 2rem 0 3rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+          width: 85%;
+        }
 
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
-  </div>
-)
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
 
-export default Home
+        .title a {
+          color: #0070f3;
+          text-decoration: none;
+        }
+
+        .title a:hover,
+        .title a:focus,
+        .title a:active {
+          text-decoration: underline;
+        }
+
+        .title {
+          margin: 0;
+          line-height: 1.15;
+          font-size: 4rem;
+          text-align: center;
+        }
+      `}</style>
+
+      <style jsx global>{`
+        html,
+        body {
+          padding: 0;
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+          background-color: #222;
+          color: #e2e2e2;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        @media (max-width: 600px) {
+          html {
+            font-size: 75%;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export async function getServerSideProps() {
+  // statistics data of corona virus that we fetch from the api
+  try {
+    const res = await fetch(API_ENDPOINT_ALL);
+    const responseData = await res.json();
+    const { cases, deaths, recovered } = responseData;
+    const data = { cases, deaths, recovered };
+
+    // location data for dropdown
+    const getLocationData = await fetch(API_ENDPOINT_COUNTRIES);
+    const locationData = await getLocationData.json();
+    const sortedLocationData = locationData.sort((a, b) => {
+      let countryNameA = a.country.toLowerCase(),
+        countryNameB = b.country.toLowerCase();
+      if (countryNameA < countryNameB)
+        //sort string ascending
+        return -1;
+      if (countryNameA > countryNameB) return 1;
+      return 0; //default return value (no sorting)
+    });
+    // Pass data to the page via props
+    return { props: { data, locationData: sortedLocationData } };
+  } catch (err) {
+    alert("Something went wrong, please refresh the page");
+  }
+}
+
+export default Home;
