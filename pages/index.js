@@ -3,16 +3,20 @@ import Head from "next/head";
 import fetch from "node-fetch";
 import Footer from "../components/Footer";
 import CardList from "../components/CardList";
-import Dropdown from "../components/Dropdown";
+import About from "../components/About";
 import LocationPicker from "../components/LocationPicker";
+import Advisory from "../components/Advisory";
 
 const API_ENDPOINT_ALL = "https://corona.lmao.ninja/all";
 const API_ENDPOINT_COUNTRIES = "https://corona.lmao.ninja/countries";
 
 const Home = ({ data, locationData }) => {
+  console.log(data);
   const [location, setLocation] = useState("Worldwide");
+  const statisticalData = data ? data : {};
+
   const [dataStatistics, setDataStatistics] = useState({
-    ...data
+    ...statisticalData
   });
 
   const handleLocationChange = evt => {
@@ -21,30 +25,34 @@ const Home = ({ data, locationData }) => {
 
   useEffect(() => {
     async function getData() {
-      if (location === "Worldwide") {
-        console.log("location is worldwide");
-        const res = await fetch(API_ENDPOINT_ALL);
-        const responseData = await res.json();
-        const { cases, deaths, recovered } = await responseData;
-        setDataStatistics({ cases, deaths, recovered });
-      } else {
-        console.log("location is a country");
-        const res = await fetch(API_ENDPOINT_COUNTRIES);
-        const data = await res.json();
-        let filterDataByCountry = await {
-          ...data.filter(item => item.country === location)[0]
-        };
-        console.log(filterDataByCountry);
+      try {
+        if (location === "Worldwide") {
+          console.log("location is worldwide");
+          const res = await fetch(API_ENDPOINT_ALL);
+          const responseData = await res.json();
+          const { cases, deaths, recovered } = await responseData;
+          setDataStatistics({ cases, deaths, recovered });
+        } else {
+          console.log("location is a country");
+          const res = await fetch(API_ENDPOINT_COUNTRIES);
+          const data = await res.json();
+          let filterDataByCountry = await {
+            ...data.filter(item => item.country === location)[0]
+          };
+          console.log(filterDataByCountry);
 
-        const {
-          cases,
-          deaths,
-          recovered,
-          todayCases: casesToday
-        } = await filterDataByCountry;
-        setDataStatistics({ cases, deaths, recovered, casesToday });
+          const {
+            cases,
+            deaths,
+            recovered,
+            todayCases: casesToday
+          } = await filterDataByCountry;
+          setDataStatistics({ cases, deaths, recovered, casesToday });
+        }
+        return data;
+      } catch (err) {
+        console.log(err);
       }
-      return data;
     }
     getData();
     console.log(dataStatistics);
@@ -62,9 +70,11 @@ const Home = ({ data, locationData }) => {
         <LocationPicker
           handleLocationChange={handleLocationChange}
           location={location}
-          locationData={locationData}
+          locationData={locationData ? locationData : {}}
         />
         <CardList data={dataStatistics} />
+        <About />
+        <Advisory />
       </main>
 
       <Footer />
@@ -108,7 +118,7 @@ const Home = ({ data, locationData }) => {
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 3.6rem;
           text-align: center;
         }
       `}</style>
@@ -131,7 +141,7 @@ const Home = ({ data, locationData }) => {
 
         @media (max-width: 600px) {
           html {
-            font-size: 75%;
+            font-size: 87.5%;
           }
         }
       `}</style>
@@ -144,6 +154,7 @@ export async function getServerSideProps() {
   try {
     const res = await fetch(API_ENDPOINT_ALL);
     const responseData = await res.json();
+
     const { cases, deaths, recovered } = responseData;
     const data = { cases, deaths, recovered };
 
@@ -161,9 +172,7 @@ export async function getServerSideProps() {
     });
     // Pass data to the page via props
     return { props: { data, locationData: sortedLocationData } };
-  } catch (err) {
-    alert("Something went wrong, please refresh the page");
-  }
+  } catch (err) {}
 }
 
 export default Home;

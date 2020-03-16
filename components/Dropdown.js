@@ -18,9 +18,28 @@ const Dropdown = ({ data, label, value, defaultVal, handleChange }) => {
         ))}
       </select>
       <style jsx>{`
-        .dropdown-select {
+        &::-webkit-scrollbar {
+          width: $size;
+          height: $size;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #3f3f3f;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: #e2e2e2;
+        }
+
+        .dropdown-select,
+        .dropdown-option {
+          font-size: 1.2rem;
+          color: #e2e2e2;
+          padding: 5px;
+          background: #3f3f3f;
         }
         .dropdown-option {
+          font-size: 1rem;
         }
       `}</style>
     </>

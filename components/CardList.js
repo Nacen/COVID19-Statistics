@@ -17,11 +17,11 @@ const CardList = ({ data }) => {
           grid-template-rows: repeat(2, 1fr);
           grid-template-columns: repeat(2, 1fr);
           justify-items: center;
+          margin: 10px 0;
         }
 
         @media (max-width: 600px) {
           .card-list {
-            grid-template-rows: repeat(auto, 1fr);
             grid-template-columns: repeat(1, 1fr);
           }
         }

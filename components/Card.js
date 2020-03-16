@@ -38,6 +38,7 @@ const Card = ({ title, value }) => {
           @media (max-width: 600px) {
           .card {
             width: 60%;
+            height: 120px;
           }
         }
         `}

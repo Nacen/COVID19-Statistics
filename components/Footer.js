@@ -12,13 +12,28 @@ const Footer = () => {
           Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
         </a>
         <div>
-          <p>Credits to WHO, EliteDaMyth.</p>
+          <p>
+            <a
+              href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Credits to WHO,
+            </a>
+            <a
+              href="https://github.com/EliteDaMyth"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              EliteDaMyth.
+            </a>
+          </p>
         </div>
       </footer>
       <style jsx>
         {`
           footer {
-            width: 100%;
+            width: 85%;
             height: 100px;
             border-top: 1px solid #3e3e3e;
             display: flex;
@@ -27,7 +42,7 @@ const Footer = () => {
             align-items: center;
           }
 
-          footer img {  
+          footer img {
             margin-left: 0.5rem;
           }
 
