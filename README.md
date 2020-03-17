@@ -4,8 +4,7 @@ This website pulls up the data statistics from an [API](https://github.com/Novel
 and compiled the information of the COVID-19 disease from the [World Health Organization](https://www.who.int/emergencies/diseases/novel-coronavirus-2019).
 
 ## Todo 
-- Error Handling
-- Adding more information
-- Fixing styling
+- Error Handling when fetching data
+- Adding more information about the virus eg. tips, myths, what to do 
 - Adding light theme
-- Refactoring the code
+- Refactoring the code, Fix the styling
