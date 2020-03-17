@@ -73,6 +73,10 @@ const Advisory = () => {
           font-size: 1.4rem;
         }
 
+        .public-advisory p {
+          line-height: 1.5;
+        }
+
         .public-advisory h4 {
           font-size: 1.2rem;
         }
