@@ -13,7 +13,7 @@ const Card = ({ title, value }) => {
         {`
           .card {
             margin: 1rem;
-            width: 75%;
+            width: 80%;
             padding: 1.5rem;
             height: 150px;
             align-self: center;
@@ -37,8 +37,7 @@ const Card = ({ title, value }) => {
           }
           @media (max-width: 600px) {
           .card {
-            width: 60%;
-            height: 120px;
+            width: 90%;
           }
         }
         `}
