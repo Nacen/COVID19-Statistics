@@ -191,6 +191,9 @@ const MythBuster = () => {
       </p>
 
       <style jsx>{`
+        .myth-buster {
+          border-top: 1px solid #3e3e3e;
+        }
         .myth-buster h2 {
           font-size: 1.6rem;
         }
@@ -209,9 +212,6 @@ const MythBuster = () => {
 
         .fact {
           color: #45b70d;
-        }
-        .myth-buster-why {
-          font-weight: bold;
         }
       `}</style>
     </section>

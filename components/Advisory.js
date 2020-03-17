@@ -69,6 +69,10 @@ const Advisory = () => {
         infections.
       </p>
       <style jsx>{`
+        .public-advisory {
+          border-top: 1px solid #3e3e3e;
+        }
+
         .public-advisory h2 {
           font-size: 1.6rem;
         }
@@ -82,7 +86,7 @@ const Advisory = () => {
         }
 
         .public-advisory-link {
-          color: #B3C7D6FF;
+          color: #b3c7d6ff;
         }
         .public-advisory-why {
           font-weight: bold;
