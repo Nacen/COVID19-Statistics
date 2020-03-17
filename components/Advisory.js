@@ -6,8 +6,16 @@ const Advisory = () => {
       <h3>Basic protective measures against the new coronavirus</h3>
       <p>
         Stay aware of the latest information on the COVID-19 outbreak, available
-        on the WHO website and through your national and local public health
-        authority.
+        on the{" "}
+        <a
+          className="public-advisory-link"
+          target="_blank"
+          href="https://www.who.int"
+          rel="noopener noreferrer"
+        >
+          WHO
+        </a>{" "}
+        website and through your national and local public health authority.
       </p>
       <h4>Wash your hands frequently</h4>
       <p>
@@ -67,6 +75,10 @@ const Advisory = () => {
 
         .public-advisory h4 {
           font-size: 1.2rem;
+        }
+
+        .public-advisory-link {
+          color: #B3C7D6FF;
         }
         .public-advisory-why {
           font-weight: bold;

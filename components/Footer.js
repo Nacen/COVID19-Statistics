@@ -50,7 +50,7 @@ const Footer = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #0070f3;
+            color: #B3C7D6FF;
           }
         `}
       </style>
