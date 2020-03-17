@@ -6,6 +6,7 @@ import CardList from "../components/CardList";
 import About from "../components/About";
 import LocationPicker from "../components/LocationPicker";
 import Advisory from "../components/Advisory";
+import MythBuster from "../components/MythBuster";
 
 const API_ENDPOINT_ALL = "https://corona.lmao.ninja/all";
 const API_ENDPOINT_COUNTRIES = "https://corona.lmao.ninja/countries";
@@ -70,6 +71,7 @@ const Home = ({ data, locationData }) => {
         <CardList data={dataStatistics} />
         <About />
         <Advisory />
+        <MythBuster />
       </main>
 
       <Footer />

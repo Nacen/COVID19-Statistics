@@ -3,7 +3,7 @@ import React from "react";
 const Advisory = () => {
   return (
     <section className="public-advisory">
-      <h3>Basic protective measures against the new coronavirus</h3>
+      <h2>Basic protective measures against the new coronavirus</h2>
       <p>
         Stay aware of the latest information on the COVID-19 outbreak, available
         on the{" "}
@@ -69,8 +69,8 @@ const Advisory = () => {
         infections.
       </p>
       <style jsx>{`
-        .public-advisory h3 {
-          font-size: 1.4rem;
+        .public-advisory h2 {
+          font-size: 1.6rem;
         }
 
         .public-advisory p {

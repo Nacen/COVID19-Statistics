@@ -18,14 +18,21 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Credits to WHO,
+              Credits to WHO for the information about COVID-19,
             </a>
             <a
               href="https://github.com/EliteDaMyth"
               target="_blank"
               rel="noopener noreferrer"
             >
-              EliteDaMyth.
+              EliteDaMyth for the API,
+            </a>
+            <a
+              href="https://github.com/Nacen/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Nacen
             </a>
           </p>
         </div>
@@ -50,7 +57,7 @@ const Footer = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #B3C7D6FF;
+            color: #b3c7d6ff;
           }
         `}
       </style>
