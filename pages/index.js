@@ -11,7 +11,6 @@ const API_ENDPOINT_ALL = "https://corona.lmao.ninja/all";
 const API_ENDPOINT_COUNTRIES = "https://corona.lmao.ninja/countries";
 
 const Home = ({ data, locationData }) => {
-  console.log(data);
   const [location, setLocation] = useState("Worldwide");
   const statisticalData = data ? data : {};
 
@@ -27,19 +26,16 @@ const Home = ({ data, locationData }) => {
     async function getData() {
       try {
         if (location === "Worldwide") {
-          console.log("location is worldwide");
           const res = await fetch(API_ENDPOINT_ALL);
           const responseData = await res.json();
           const { cases, deaths, recovered } = await responseData;
           setDataStatistics({ cases, deaths, recovered });
         } else {
-          console.log("location is a country");
           const res = await fetch(API_ENDPOINT_COUNTRIES);
           const data = await res.json();
           let filterDataByCountry = await {
             ...data.filter(item => item.country === location)[0]
           };
-          console.log(filterDataByCountry);
 
           const {
             cases,
@@ -55,7 +51,6 @@ const Home = ({ data, locationData }) => {
       }
     }
     getData();
-    console.log(dataStatistics);
   }, [location]);
 
   return (
