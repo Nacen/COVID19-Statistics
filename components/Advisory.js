@@ -75,6 +75,7 @@ const Advisory = () => {
 
         .public-advisory h2 {
           font-size: 1.6rem;
+          margin-top: 1.5rem;
         }
 
         .public-advisory p {

@@ -46,6 +46,7 @@ const About = () => {
         }
         .about-title {
           font-size: 1.4rem;
+          margin-top: 1.5rem;
         }
         .about-content {
           font-size: 1rem;

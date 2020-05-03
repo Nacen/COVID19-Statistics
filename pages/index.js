@@ -1,78 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { SWRConfig } from "swr";
 import Head from "next/head";
-import fetch from "node-fetch";
 import Footer from "../components/Footer";
-import CardList from "../components/CardList";
 import About from "../components/About";
-import LocationPicker from "../components/LocationPicker";
 import Advisory from "../components/Advisory";
 import MythBuster from "../components/MythBuster";
+import TotalStats from "../components/TotalStats/TotalStats";
+import fetcher from "../utils/FETCHER/FETCHER";
+import CountriesStatsContainer from "../components/CountriesStats/CountriesStatsContainer";
 
-const API_ENDPOINT_ALL = "https://corona.lmao.ninja/all";
-const API_ENDPOINT_COUNTRIES = "https://corona.lmao.ninja/countries";
-
-const Home = ({ data, locationData }) => {
-  const [location, setLocation] = useState("Worldwide");
-  const statisticalData = data ? data : {};
-
-  const [dataStatistics, setDataStatistics] = useState({
-    ...statisticalData
-  });
-
-  const handleLocationChange = evt => {
-    setLocation(evt.target.value);
-  };
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        if (location === "Worldwide") {
-          const res = await fetch(API_ENDPOINT_ALL);
-          const responseData = await res.json();
-          const { cases, deaths, recovered } = await responseData;
-          setDataStatistics({ cases, deaths, recovered });
-        } else {
-          const res = await fetch(API_ENDPOINT_COUNTRIES);
-          const data = await res.json();
-          let filterDataByCountry = await {
-            ...data.filter(item => item.country === location)[0]
-          };
-
-          const {
-            cases,
-            deaths,
-            recovered,
-            todayCases: casesToday
-          } = await filterDataByCountry;
-          setDataStatistics({ cases, deaths, recovered, casesToday });
-        }
-        return data;
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getData();
-  }, [location]);
-
+const Home = () => {
   return (
     <div className="container">
       <Head>
         <title>COVID19 Statistics</title>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossOrigin="anonymous"
+        />
       </Head>
 
-      <main>
-        <h1 className="title">Novel Corona Virus Statistics</h1>
-        <LocationPicker
-          handleLocationChange={handleLocationChange}
-          location={location}
-          locationData={locationData ? locationData : {}}
-        />
-        <CardList data={dataStatistics} />
-        <About />
-        <Advisory />
-        <MythBuster />
-      </main>
+      <SWRConfig
+        value={{
+          refreshInterval: 0,
+          fetcher: fetcher,
+        }}
+      >
+        <main>
+          <h1 className="title">COVID-19 Stats</h1>
+          <TotalStats />
+          <CountriesStatsContainer />
+          <About />
+          <Advisory />
+          <MythBuster />
+        </main>
+      </SWRConfig>
 
       <Footer />
 
@@ -102,7 +67,7 @@ const Home = ({ data, locationData }) => {
         }
 
         .title {
-          margin: 0;
+          margin: 0 0 2rem;
           line-height: 1.15;
           font-size: 3.6rem;
           text-align: center;
@@ -120,6 +85,11 @@ const Home = ({ data, locationData }) => {
           background-color: #222;
           color: #e2e2e2;
         }
+        svg {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
 
         * {
           box-sizing: border-box;
@@ -134,31 +104,5 @@ const Home = ({ data, locationData }) => {
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  // statistics data of corona virus that we fetch from the api
-  try {
-    const res = await fetch(API_ENDPOINT_ALL);
-    const responseData = await res.json();
-
-    const { cases, deaths, recovered } = responseData;
-    const data = { cases, deaths, recovered };
-
-    // location data for dropdown
-    const getLocationData = await fetch(API_ENDPOINT_COUNTRIES);
-    const locationData = await getLocationData.json();
-    const sortedLocationData = locationData.sort((a, b) => {
-      let countryNameA = a.country.toLowerCase(),
-        countryNameB = b.country.toLowerCase();
-      if (countryNameA < countryNameB)
-        //sort string ascending
-        return -1;
-      if (countryNameA > countryNameB) return 1;
-      return 0; //default return value (no sorting)
-    });
-    // Pass data to the page via props
-    return { props: { data, locationData: sortedLocationData } };
-  } catch (err) {}
-}
 
 export default Home;

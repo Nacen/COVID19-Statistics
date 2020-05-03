@@ -8,8 +8,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
+    "lodash": "^4.17.15",
     "next": "9.3.0",
     "react": "16.13.0",
-    "react-dom": "16.13.0"
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "16.13.0",
+    "swr": "^0.2.0",
+    "unfetch": "^4.1.0"
   }
 }

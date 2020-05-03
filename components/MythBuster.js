@@ -196,6 +196,7 @@ const MythBuster = () => {
         }
         .myth-buster h2 {
           font-size: 1.6rem;
+          margin-top: 1.5rem;
         }
 
         .myth-buster p {

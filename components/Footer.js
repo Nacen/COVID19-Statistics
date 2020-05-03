@@ -9,7 +9,7 @@ const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
+          Powered by <img src="/vercel.svg" alt="VERCEL Logo" />
         </a>
         <div>
           <p>
