@@ -9,7 +9,6 @@ const CountriesStatsContainer = () => {
   const { data, error } = useSWR(API.countriesStatistics);
 
   if (error) return <ErrorMessage />;
-  // i was given an option to mutate the data, but i dont want to mutate it i want to store it in a usestate
 
   if (!data)
     return (
@@ -19,21 +18,20 @@ const CountriesStatsContainer = () => {
     );
 
   return (
-    <div className="countries-stats-wrapper">
-      <CountriesStats data={data} />
-      <small className="scrollable-info">* Table is scrollable</small>
-      <style jsx>{`
-        .countries-stats-wrapper {
-          overflow-y: auto;
-          height: 400px;
-          margin: 20px 0;
-          width: 100%;
-        }
-        .scrollable-info {
-          font-size: 20px;
-        }
-      `}</style>
-    </div>
+      <div className="countries-stats-table">
+        <CountriesStats data={data} />
+        <style jsx>{`
+          .countries-stats {
+            width: 100%;
+          }
+          .countries-stats-table {
+            overflow-y: auto;
+            height: 400px;
+            margin: 20px 0;
+            width: 100%;
+          }
+        `}</style>
+      </div>
   );
 };
 

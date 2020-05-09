@@ -33,6 +33,8 @@ const Home = () => {
           <h1 className="title">COVID-19 Stats</h1>
           <TotalStats />
           <CountriesStatsContainer />
+          <div className="scrollable-info">* Table is scrollable</div>
+
           <About />
           <Advisory />
           <MythBuster />
@@ -71,6 +73,11 @@ const Home = () => {
           line-height: 1.15;
           font-size: 3.6rem;
           text-align: center;
+        }
+
+        .scrollable-info {
+          font-size: 20px;
+          margin: 10px 0;
         }
       `}</style>
 
